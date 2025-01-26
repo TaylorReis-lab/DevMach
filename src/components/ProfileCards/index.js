@@ -1,12 +1,22 @@
-import React from "react";
-import {Card, ProfileImage, ProfileInfo, Name, Bio, Actions, Button} from './styles'
+import React from 'react'
+import {
+  Card,
+  ProfileImage,
+  ProfileInfo,
+  Name,
+  Bio,
+  Actions,
+  Button
+} from './styles'
 
 const ProfileCard = ({ user }) => {
   return (
     <Card>
       <ProfileImage src={user.image} alt={user.name} />
       <ProfileInfo>
-        <Name>{user.name}, {user.age}</Name>
+        <Name>
+          {user.name}, {user.age}
+        </Name>
         <Bio>{user.bio}</Bio>
       </ProfileInfo>
       <Actions>
@@ -15,8 +25,7 @@ const ProfileCard = ({ user }) => {
         <Button type="superlike">⚡</Button>
       </Actions>
     </Card>
-  );
-};
+  )
+}
 
-
-export default ProfileCard;
+export default ProfileCard

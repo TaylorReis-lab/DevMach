@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios'
 
 const apidemach = axios.create({
-    baseURL: 'http://localhost:3001/users'
+  baseURL: 'http://localhost:3001/users'
 })
 
 export default apidemach
