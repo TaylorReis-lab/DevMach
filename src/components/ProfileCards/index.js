@@ -1,17 +1,22 @@
-import React from 'react'
+import React from "react";
+import {Card, ProfileImage, ProfileInfo, Name, Bio, Actions, Button} from './styles'
 
-export function ProfileCards({ user, onLike, onDislike }) {
+const ProfileCard = ({ user }) => {
   return (
-    <div className="profile-card">
-      <h3>{user.name}</h3>
-      <p>{user.bio}</p>
-      <ul>
-        {user.skills.map((skill, index) => (
-          <li key={index}>{skill}</li>
-        ))}
-      </ul>
-      <button onClick={() => onLike(user.id)}>Like</button>
-      <button onClick={() => onDislike(user.id)}>Dislike</button>
-    </div>
-  )
-}
+    <Card>
+      <ProfileImage src={user.image} alt={user.name} />
+      <ProfileInfo>
+        <Name>{user.name}, {user.age}</Name>
+        <Bio>{user.bio}</Bio>
+      </ProfileInfo>
+      <Actions>
+        <Button type="dislike">❌</Button>
+        <Button type="like">❤️</Button>
+        <Button type="superlike">⚡</Button>
+      </Actions>
+    </Card>
+  );
+};
+
+
+export default ProfileCard;

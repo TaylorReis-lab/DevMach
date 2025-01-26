@@ -1,40 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { ProfileCards } from '../compornents'
-import { getUsers, likeUser, dislikeUser } from '../services/api'
+import React, { useState, useEffect } from 'react';
+import ProfileCard from '../../components/ProfileCards';
+import api from '../../services/api'
 
-function Home() {
-  const [users, setUsers] = useState([])
+const Home = () => {
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    async function fetchUsers() {
-      const response = await getUsers()
-      setUsers(response.data)
-    }
-    fetchUsers()
-  }, [])
-
-  const handleLike = async userId => {
-    await likeUser(userId)
-    setUsers(users.filter(user => user.id !== userId))
-  }
-
-  const handleDislike = async userId => {
-    await dislikeUser(userId)
-    setUsers(users.filter(user => user.id !== userId))
-  }
+    fetch(api)
+      .then(response => response.json())
+      .then(data => setUsers(data))
+      .catch(error => console.error('Erro ao buscar usuários:', error));
+  }, []);
 
   return (
-    <div>
-      {users.map(user => (
-        <ProfileCards
-          key={user.id}
-          user={user}
-          onLike={handleLike}
-          onDislike={handleDislike}
-        />
-      ))}
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+      {users.length > 0 ? (
+        users.map(user => <ProfileCard key={user.id} user={user} />)
+      ) : (
+        <p>Carregando usuários...</p>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
