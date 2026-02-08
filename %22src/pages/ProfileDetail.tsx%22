@@ -1,0 +1,120 @@
+import { useNavigate, useLocation } from 'react-router-dom';
+
+interface DevProfile {
+  id: number;
+  name: string;
+  role: string;
+  techs: string[];
+  location: string;
+  description: string;
+  image: string;
+  experience?: string;
+  projects?: string[];
+  github?: string;
+  linkedin?: string;
+}
+
+export function ProfileDetail() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const profile = location.state as DevProfile;
+
+  if (!profile) {
+    navigate('/swipe');
+    return null;
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
+      <div className="max-w-2xl mx-auto">
+        <button 
+          onClick={() => navigate('/swipe')}
+          className="mb-6 text-indigo-600 hover:text-indigo-800 flex items-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Voltar
+        </button>
+
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="p-8">
+            <div className="text-center mb-8">
+              <div className="w-40 h-40 mx-auto bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full mb-6 flex items-center justify-center">
+                <span className="text-6xl">👨‍💻</span>
+              </div>
+              <h1 className="text-3xl font-bold text-gray-800">{profile.name}</h1>
+              <p className="text-indigo-600 font-medium text-lg mt-2">{profile.role}</p>
+              <p className="text-gray-500 mt-1">{profile.location}</p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Sobre</h3>
+              <p className="text-gray-700 leading-relaxed">{profile.description}</p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Experiência</h3>
+              <p className="text-gray-700">{profile.experience || 'Não informado'}</p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Tecnologias</h3>
+              <div className="flex flex-wrap gap-2">
+                {profile.techs.map((tech, index) => (
+                  <span 
+                    key={index}
+                    className="px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Projetos Destacados</h3>
+              <ul className="space-y-2">
+                {profile.projects?.map((project, index) => (
+                  <li key={index} className="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-600 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-gray-700">{project}</span>
+                  </li>
+                )) || (
+                  <li className="text-gray-500">Nenhum projeto destacado</li>
+                )}
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <a 
+                href={profile.github || '#'} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center p-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.652.242 2.873.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <a 
+                href={profile.linkedin || '#'} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+                </svg>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
